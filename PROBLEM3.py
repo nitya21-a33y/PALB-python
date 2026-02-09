@@ -5,4 +5,4 @@ class Solution:
         # Code here
         arr.sort()
         return arr[k-1]
-        print(kthSmallest(arr,k))
+        

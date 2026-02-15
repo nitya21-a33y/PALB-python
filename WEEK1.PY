@@ -1,3 +1,4 @@
+
 #You are given an array of integers arr[]. You have to reverse the given array.
 class Solution:
     def reverseArray(self, arr):
@@ -24,3 +25,12 @@ class Solution:
             if maximum < i:
                 maximum = i
         return[minimum,maximum]
+
+
+#Given an integer array arr[] and an integer k, your task is to find and return the kth smallest element in the given array.
+class Solution:
+    def kthSmallest(self, arr, k):
+        # Code here
+        arr.sort()
+        return arr[k-1]
+        

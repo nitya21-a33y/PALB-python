@@ -77,4 +77,119 @@ class Solution:
 
 
 
-#
+# Given an array arr[] of integers, calculate the median.
+class Solution:
+    def findMedian(self, arr):
+        #code here.
+        arr.sort()
+        n = len(arr)
+        if n%2 == 1:
+            median = arr[n//2]
+        else:
+            median = (arr[n//2 - 1] + arr[n//2]) / 2
+            
+        return median
+
+
+
+
+#You are given a rectangular matrix mat[][] of size n x m, and your task is to return an array while traversing the matrix in spiral form.
+class Solution:
+    def spirallyTraverse(self, mat):
+        if not mat:
+            return []
+        n = len(mat)
+        m = len(mat[0])
+        top, bottom = 0, n - 1
+        left, right = 0, m - 1
+        result = []
+        while top <= bottom and left <= right:
+            for j in range(left, right + 1):
+                result.append(mat[top][j])
+            top += 1
+            for i in range(top, bottom + 1):
+                result.append(mat[i][right])
+            right -= 1
+            if top <= bottom:
+                for j in range(right, left - 1, -1):
+                    result.append(mat[bottom][j])
+                bottom -= 1
+            if left <= right:
+                for i in range(bottom, top - 1, -1):
+                    result.append(mat[i][left])
+                left += 1
+        return result
+       
+
+
+
+
+#The first integer of each row is greater than the last integer of the previous row. Given an integer target, return true if target is in matrix or false otherwise.
+class Solution:
+    def searchMatrix(self, mat: List[List[int]], target: int) -> bool:
+        if not mat or not mat[0]:
+            return False
+        n = len(mat)
+        m = len(mat[0])
+        left = 0
+        right = n * m - 1
+        while left <= right:
+            mid = (left + right) // 2
+            row = mid // m
+            col = mid % m
+            mid_val = mat[row][col]
+            if mid_val == target:
+                return True
+            elif mid_val < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+        return False
+
+
+
+#Given a row-wise sorted matrix mat[][] of size n*m, where the number of rows and columns is always odd. Return the median of the matrix
+import bisect
+class Solution:
+    def median(self, mat):
+    	n = len(mat)
+        m = len(mat[0])
+        low = min(row[0] for row in mat)
+        high = max(row[-1] for row in mat)
+        required = (n * m) // 2
+        while low <= high:
+            mid = (low + high) // 2
+            count = 0
+            for row in mat:
+                count += bisect.bisect_right(row, mid)
+            if count <= required:
+                low = mid + 1
+            else:
+                high = mid - 1
+        return low
+
+
+
+#You are given a 2D binary array arr[][] consisting of only 1s and 0s. Each row of the array is sorted in non-decreasing order. Your task is to find and return the index of the first row that contains the maximum number of 1s. If no such row exists, return -1.
+class Solution:
+    def rowWithMax1s(self, arr):
+        n = len(arr)
+        m = len(arr[0])
+        max_ones = 0
+        ans = -1
+        for i in range(n):
+            row = arr[i]
+            left, right = 0, m - 1
+            first_one = m
+            while left <= right:
+                mid = (left + right) // 2
+                if row[mid] == 1:
+                    first_one = mid
+                    right = mid - 1
+                else:
+                    left = mid + 1
+            ones_count = m - first_one
+            if ones_count > max_ones:
+                max_ones = ones_count
+                ans = i
+        return ans
